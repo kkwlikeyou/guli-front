@@ -33,12 +33,12 @@
           <!-- / nav -->
           <ul class="h-r-login">
             <li id="no-login">
-              <a href="/sing_in" title="登录">
+              <a href="/login" title="登录">
                 <em class="icon18 login-icon">&nbsp;</em>
                 <span class="vam ml5">登录</span>
               </a>
               |
-              <a href="/sign_up" title="注册">
+              <a href="/register" title="注册">
                 <span class="vam ml5">注册</span>
               </a>
             </li>
@@ -92,9 +92,9 @@
       </section>
     </header>
     <!-- /公共头引入 -->
-      
-	<nuxt />
-      
+
+    <nuxt />
+
     <!-- 公共底引入 -->
     <footer id="footer">
       <section class="container">
