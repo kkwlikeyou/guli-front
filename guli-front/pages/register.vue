@@ -43,6 +43,14 @@
             />
             <i class="iconfont icon-phone" />
           </div>
+          <div>
+            <el-input
+              type="email"
+              placeholder="电子邮箱"
+              v-model="params.email"
+            />
+            <i class="iconfont icon-mail" />
+          </div>
         </el-form-item>
         <el-form-item
           class="input-prepend restyle no-radius"
@@ -97,7 +105,7 @@
           点击 “注册” 即表示您同意并愿意遵守简书
           <br />
           <a target="_blank" href="http://www.jianshu.com/p/c44d171298ce"
-            >用户协 议</a
+            >用户协议</a
           >
           和
           <a target="_blank" href="http://www.jianshu.com/p/2ov8x3">隐私政策</a>
@@ -131,7 +139,7 @@
 import "~/assets/css/sign.css";
 import "~/assets/css/iconfont.css";
 
-// import registerApi from "@/api/register";
+import registerApi from "@/api/register";
 
 export default {
   layout: "sign",
@@ -139,6 +147,7 @@ export default {
     return {
       params: {
         mobile: "",
+        email: "",
         code: "", //验证码
         nickname: "",
         password: "",
@@ -156,13 +165,11 @@ export default {
       if (!this.sending) return;
       //debugger
       // prop 换成你想监听的prop字段
-      this.$refs.userForm.validateField("mobile", (errMsg) => {
-        if (errMsg == "") {
-          registerApi.getMobile(this.params.mobile).then((res) => {
+     
+          registerApi.sendCode(this.params.email).then((res) => {
             this.sending = false;
             this.timeDown();
-          });
-        }
+        
       });
     },
     //倒计时

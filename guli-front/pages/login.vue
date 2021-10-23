@@ -9,18 +9,21 @@
       <el-form ref="userForm" :model="user">
         <el-form-item
           class="input-prepend restyle"
-          prop="mobile"
           :rules="[
             {
               required: true,
-              message: '请输入手机号码',
+              message: '请输入手机号或邮箱',
               trigger: 'blur',
             },
             { validator: checkPhone, trigger: 'blur' },
           ]"
         >
           <div>
-            <el-input type="text" placeholder="手机号" v-model="user.mobile" />
+            <el-input
+              type="text"
+              placeholder="手机号或邮箱"
+              v-model="user.mobileOrEmail"
+            />
             <i class="iconfont icon-phone" />
           </div>
         </el-form-item>
@@ -74,15 +77,15 @@
 <script>
 import "~/assets/css/sign.css";
 import "~/assets/css/iconfont.css";
-// import cookie from "js-cookie";
-// import loginApi from "@/api/login";
+import cookie from "js-cookie";
+import loginApi from "@/api/login";
 export default {
   layout: "sign",
   data() {
     return {
       user: {
         //封装用于登录的用户对象
-        mobile: "",
+        mobileOrEmail: "",
         password: "",
       },
       //用于获取接口传来的token中的对象
@@ -100,7 +103,7 @@ export default {
           });
           //登录成功根据token获取用户信息
           loginApi.getLoginInfo().then((response) => {
-            this.loginInfo = response.data.data.userInfo;
+            this.loginInfo = JSON.stringify(response.data.data.userInfo);
             //将用户信息记录cookie
             cookie.set("guli_ucenter", this.loginInfo, { domain: "localhost" });
             //跳转页面
@@ -112,10 +115,15 @@ export default {
     },
     checkPhone(rule, value, callback) {
       //debugger
-      if (!/^1[34578]\d{9}$/.test(value)) {
-        return callback(new Error("手机号码格式不正确"));
+      if (
+        /^1[34578]\d{9}$/.test(value) ||
+        /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+          value
+        )
+      ) {
+        return callback();
       }
-      return callback();
+      return callback(new Error("格式不正确"));
     },
   },
 };
