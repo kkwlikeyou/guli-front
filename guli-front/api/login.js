@@ -14,6 +14,12 @@ export default {
             url: `/educenter/member/getMemberInfo`,
             method: 'get'
         })
-    }
+    },
+    gotoWxLogin() {
+        return request({
+            url: `/api/ucenter/wx/login`,
+            method: 'get'
+        })
+    },
 
 }
