@@ -94,7 +94,7 @@
                   </h6>
                   <div class="course-txt-body-wrap">
                     <section class="course-txt-body">
-                      <p>
+                      <p v-html="course.description">
                         {{course.description}}
                       </p>
                     </section>
@@ -120,7 +120,7 @@
                             </a>
                             <ol class="lh-menu-ol" style="display: block">
                               <li v-for="video in chapter.children" :key="video.id" class="lh-menu-second ml30">
-                                <a href="#" :title="video.title">
+                                <a :href="'/player/'+video.videoSourceId" :title="video.title" target="_blank">
                                   <span class="fr">
                                     <i class="free-icon vam mr10">免费试听</i>
                                   </span>
